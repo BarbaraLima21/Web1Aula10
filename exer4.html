@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Identificador de E-mail</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        textarea {
+            width: 100%;
+            max-width: 500px;
+            height: 100px;
+            padding: 8px;
+            display: block;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 8px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .resultado {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border: 1px solid #ccc;
+            max-width: 500px;
+        }
+    </style>
+    <script>
+        window.onload = inicio;
+
+        function inicio() {
+            let botao = document.getElementById('btnDestacar');
+            botao.addEventListener('click', destacarEmail);
+        }
+
+        function destacarEmail() {
+            let campoTexto = document.getElementById('txtOrigem');
+            let campoResultado = document.getElementById('divResultado');
+            
+            let textoOriginal = campoTexto.value;
+            let palavras = textoOriginal.split(' ');
+            let resultadoFiltrado = [];
+
+            for (let i = 0; i < palavras.length; i++) {
+                let palavraAtual = palavras[i];
+
+                if (palavraAtual.includes('@') && palavraAtual.includes('.')) {
+                    resultadoFiltrado.push("<strong>" + palavraAtual + "</strong>");
+                } else {
+                    resultadoFiltrado.push(palavraAtual);
+                }
+            }
+
+            campoResultado.innerHTML = resultadoFiltrado.join(' ');
+        }
+    </script>
+</head>
+<body>
+
+    <h2>Identificar E-mail no Texto</h2>
+    <p>Digite um texto contendo e-mails no padrão nome@site.com:</p>
+
+    <textarea id="txtOrigem"></textarea>
+    
+    <button id="btnDestacar">Destacar E-mail</button>
+
+    <h3>Texto Marcado:</h3>
+    <div id="divResultado" class="resultado"></div>
+
+</body>
+</html>

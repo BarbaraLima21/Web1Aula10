@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Identificador de Telefone</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        textarea {
+            width: 100%;
+            max-width: 500px;
+            height: 100px;
+            padding: 8px;
+            display: block;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 8px 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .resultado {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border: 1px solid #ccc;
+            max-width: 500px;
+        }
+    </style>
+    <script>
+        window.onload = inicio;
+
+        function inicio() {
+            let botao = document.getElementById('btnDestacar');
+            botao.addEventListener('click', destacarTelefone);
+        }
+
+        function destacarTelefone() {
+            let campoTexto = document.getElementById('txtOrigem');
+            let campoResultado = document.getElementById('divResultado');
+            
+            let textoOriginal = campoTexto.value;
+            let textoModificado = "";
+
+            for (let i = 0; i < textoOriginal.length; i++) {
+                
+                let pedaco = textoOriginal.substring(i, i + 10);
+                
+                let parte1 = pedaco.substring(0, 5);
+                let hifen = pedaco.substring(5, 6);
+                let parte2 = pedaco.substring(6, 10);
+
+                if (pedaco.length == 10 && !isNaN(parte1) && hifen == "-" && !isNaN(parte2)) {
+                    
+                    if (parte1.trim() != "" && parte2.trim() != "") {
+                        textoModificado += "<strong>" + pedaco + "</strong>";
+                        i = i + 9; // Avança o índice para pular o telefone que já processamos
+                        continue;
+                    }
+                }
+                
+                textoModificado += textoOriginal.charAt(i);
+            }
+
+            campoResultado.innerHTML = textoModificado;
+        }
+    </script>
+</head>
+<body>
+
+    <h2>Identificar Telefone no Texto</h2>
+    <p>Digite um texto com telefones no padrão 99999-9999:</p>
+
+    <textarea id="txtOrigem"></textarea>
+    
+    <button id="btnDestacar">Destacar Telefone</button>
+
+    <h3>Texto com Destaque:</h3>
+    <div id="divResultado" class="resultado">
+        </div>
+
+</body>
+</html>
